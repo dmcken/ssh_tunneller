@@ -111,7 +111,7 @@ def parse_config() -> dict[str,str]:
 
 def main() -> None:
     '''
-    Main function
+    Start tunnel with logging
     '''
     setup_logging()
 
