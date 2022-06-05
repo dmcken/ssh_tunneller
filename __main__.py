@@ -17,7 +17,7 @@ import pprint
 import sys
 import time
 
-from contextlib import redirect_stdout
+# from contextlib import redirect_stdout
 
 # External imports
 from sshtunnel import open_tunnel
@@ -35,8 +35,8 @@ def check_log_level(level: str, default_level: str = 'INFO') -> int:
     # pylint: disable=protected-access
     if level in logging._nameToLevel:
         return logging._nameToLevel[level]
-    else:
-        return logging._nameToLevel[default_level]
+
+    return logging._nameToLevel[default_level]
 
 def setup_logging() -> None:
     '''
@@ -90,7 +90,7 @@ def parse_config() -> dict[str,str]:
         logging.info("Private key found, certificate mode enabled")
         if ssh_private_key_password is None:
             #TODO: allow no password but it must be set explicitly by setting
-            # the password variable to the string 'None'. 
+            # the password variable to the string 'None'
             logging.error("Private key password not set, please set it as "
                 "environment variable 'ssh_private_key_password'")
             sys.exit(-1)
@@ -109,7 +109,7 @@ def parse_config() -> dict[str,str]:
 
     return tunnel_params
 
-def main():
+def main() -> None:
     '''
     Main function
     '''
@@ -126,6 +126,7 @@ def main():
     tunnel_config = parse_config()
 
     logging.info("SSH Tunnel starting...")
+    # Potentally dangerous statement as passwords will be included
     logging.debug("SSH Tunnel parameters: %s", pprint.pformat(tunnel_config))
 
     try:
