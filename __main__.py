@@ -43,7 +43,7 @@ def setup_logging() -> None:
     '''
     Setup logging for this script
     '''
-    log_format = '%(asctime)s - %(name)s - %(levelname)s %(message)s'
+    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     date_format = '%Y-%m-%d %H:%M:%S' # ISO format
     log_level_default = 'INFO'
 
