@@ -2,26 +2,26 @@ version: '3.4'
 
 services:
   ssh-tunnel:
-    depends_on:
-      - sshd-server-test
+    # depends_on:
+    #   - sshd-server-test
     image: dmcken/ssh-tunnel:v0.0.5
     build:
       context: .
     ports:
-      - "80:80"
+      # - "80:80"
       - "3306:3306"
     env_file:
       - .env
     volumes:
-      - ./sshd_server_test/keys:/private.key
+      - ./private.key:/private.key
     restart: unless-stopped
 
-  sshd-server-test:
-    image: panubo/sshd_sshtunneller
-    build:
-      context: ./sshd_server_test
-    ports:
-      - "2222:22"
-    environment:
-      SSH_ENABLE_ROOT: "true"
-      TCP_FORWARDING: "true"
+  # sshd-server-test:
+  #   image: panubo/sshd_sshtunneller
+  #   build:
+  #     context: ./sshd_server_test
+  #   ports:
+  #     - "2222:22"
+  #   environment:
+  #     SSH_ENABLE_ROOT: "true"
+  #     TCP_FORWARDING: "true"
