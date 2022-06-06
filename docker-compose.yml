@@ -4,7 +4,7 @@ services:
   ssh-tunnel:
     # depends_on:
     #   - sshd-server-test
-    image: dmcken/ssh-tunnel:v0.0.6
+    image: dmcken/ssh-tunnel:v0.0.7
     build:
       context: .
     ports:
