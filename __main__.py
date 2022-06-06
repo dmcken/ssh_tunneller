@@ -133,8 +133,7 @@ def main() -> None:
         with sshtunnel.open_tunnel(
             **tunnel_config
         ) as server:
-            logging.info("SSH Tunnels established on %s@%s: "
-                "remote_bind_addresses:\n'%s', local_bind_addresses: '%s'",
+            logging.info("SSH Tunnels established on %s@%s: binds:\n'%s' => '%s'",
                 tunnel_config['ssh_username'],
                 tunnel_config['ssh_address_or_host'],
                 tunnel_config['remote_bind_addresses'],
