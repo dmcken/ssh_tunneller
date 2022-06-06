@@ -90,15 +90,11 @@ def parse_config() -> dict[str,str]:
     private_key_file = "/private.key"
     if os.path.exists(private_key_file):
         logging.info("Private key found, certificate mode enabled")
-        if ssh_private_key_password is None:
-            #TODO: allow no password but it must be set explicitly by setting
-            # the password variable to the string 'None'
-            logging.error("Private key password not set, please set it as "
-                "environment variable 'ssh_private_key_password'")
-            sys.exit(-1)
-
         tunnel_params['ssh_pkey'] = private_key_file
-        tunnel_params['ssh_private_key_password'] = ssh_private_key_password
+        if ssh_private_key_password in [None, 'None']:
+            pass
+        else:
+            tunnel_params['ssh_private_key_password'] = ssh_private_key_password
     else:
         if ssh_password is None:
             logging.error("SSH Password not provided, quitting...")
@@ -139,7 +135,7 @@ def main() -> None:
             logging.info("SSH Tunnels established on %s@%s: "
                 "remote_bind_addresses:\n'%s', local_bind_addresses: '%s'",
                 tunnel_config['ssh_username'],
-                tunnel_config['ssh_host'],
+                tunnel_config['ssh_address_or_host'],
                 tunnel_config['remote_bind_addresses'],
                 tunnel_config['local_bind_addresses'],
             )
