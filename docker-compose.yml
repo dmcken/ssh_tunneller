@@ -10,17 +10,10 @@ services:
     ports:
       - "80:80"
       - "3306:3306"
-    environment:
-      - log_level=DEBUG
-      - ssh_host=sshdservertest
-      - ssh_port=2222
-      - ssh_username=root
-      #- ssh_password=This_Is_a_SSH_P4SSW0RD
-      - ssh_private_key_password=12345
-      - remote_bind_addresses=[('127.0.0.1', 80),('127.0.0.1', 3306)]
-      - local_bind_addresses=[("0.0.0.0", 80),('0.0.0.0', 3306)]
-    volumes:
-      - ./sshd_server_test/keys:/private.key
+    env_file:
+      - .env
+    #volumes:
+    #  - ./sshd_server_test/keys:/private.key
     restart: always
 
   sshdservertest:
