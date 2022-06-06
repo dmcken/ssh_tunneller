@@ -21,7 +21,7 @@ import time
 # from contextlib import redirect_stdout
 
 # External imports
-from sshtunnel import open_tunnel
+import sshtunnel
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +83,7 @@ def parse_config() -> dict[str,str]:
     tunnel_params = {}
 
     # Mandatory parameters
-    tunnel_params['destination'] = tuple([ssh_host_ip, ssh_port])
+    tunnel_params['ssh_address_or_host'] = tuple([ssh_host_ip, ssh_port])
     tunnel_params['ssh_username'] = ssh_username
     tunnel_params['set_keepalive'] = 30.0
 
@@ -132,7 +132,7 @@ def main() -> None:
     logging.debug("SSH Tunnel parameters: %s", pprint.pformat(tunnel_config))
 
     try:
-        with open_tunnel(
+        with sshtunnel.open_tunnel(
             **tunnel_config
         ) as server:
             logging.info("SSH Tunnels established on %s@%s: "
