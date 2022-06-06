@@ -14,6 +14,7 @@ import io
 import logging
 import os
 import pprint
+import socket
 import sys
 import time
 
@@ -71,6 +72,7 @@ def parse_config() -> dict[str,str]:
     # Fetch and sanitise input
     # TODO: fetch more on demand
     ssh_host = os.environ.get("ssh_host")
+    ssh_host_ip = socket.gethostbyname(ssh_host)
     ssh_port = int(os.environ.get("ssh_port"))
     ssh_username = os.environ.get("ssh_username")
     ssh_password = os.environ.get("ssh_password")
@@ -81,7 +83,7 @@ def parse_config() -> dict[str,str]:
     tunnel_params = {}
 
     # Mandatory parameters
-    tunnel_params['destination'] = (ssh_host, ssh_port)
+    tunnel_params['destination'] = (ssh_host_ip, ssh_port)
     tunnel_params['ssh_username'] = ssh_username
     tunnel_params['set_keepalive'] = 30.0
 
