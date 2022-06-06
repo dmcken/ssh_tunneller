@@ -98,6 +98,7 @@ def parse_config() -> dict[str,str]:
             sys.exit(-1)
 
         tunnel_params['ssh_pkey'] = private_key_file
+        tunnel_params['ssh_private_key_password'] = ssh_private_key_password
     else:
         if ssh_password is None:
             logging.error("SSH Password not provided, quitting...")
