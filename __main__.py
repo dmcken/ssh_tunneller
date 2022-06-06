@@ -14,7 +14,6 @@ import io
 import logging
 import os
 import pprint
-import socket
 import sys
 import time
 
@@ -54,7 +53,7 @@ def setup_logging() -> None:
     # Current thoughts on the matter, allow the definition of variable:
     # log_level_<module name> = ERROR
     # for example log_level_paramiko would then translate to:
-    logging.getLogger('paramiko').setLevel(logging.ERROR)
+    # logging.getLogger('paramiko').setLevel(logging.ERROR)
     logging.getLogger('paramiko.transport').setLevel(logging.ERROR)
 
     logging.basicConfig(
@@ -73,7 +72,6 @@ def parse_config() -> dict[str,str]:
     # Fetch and sanitise input
     # TODO: fetch more on demand
     ssh_host = os.environ.get("ssh_host")
-    ssh_host_ip = socket.gethostbyname(ssh_host)
     ssh_port = int(os.environ.get("ssh_port"))
     ssh_username = os.environ.get("ssh_username")
     ssh_password = os.environ.get("ssh_password")
@@ -109,7 +107,7 @@ def parse_config() -> dict[str,str]:
 
     return tunnel_params
 
-def main() -> None:
+def start_tunnel() -> None:
     '''
     Start tunnel with logging
     '''
@@ -117,11 +115,11 @@ def main() -> None:
 
     ### Setup the console handler with a StringIO object
     log_capture_string = io.StringIO()
-    ch = logging.StreamHandler(log_capture_string)
-    ch.setLevel(logging.ERROR)
+    handler_ch = logging.StreamHandler(log_capture_string)
+    handler_ch.setLevel(logging.ERROR)
 
     ### Add the console handler to the logger
-    logger.addHandler(ch)
+    logger.addHandler(handler_ch)
 
     tunnel_config = parse_config()
 
@@ -170,4 +168,4 @@ def check_tunnel(server, stdout):
     time.sleep(1)
 
 if __name__== "__main__":
-    main()
+    start_tunnel()
