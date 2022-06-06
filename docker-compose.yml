@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  sshtunneller:
+  ssh-tunnel:
     depends_on:
       - sshd-server-test
     image: dmcken/ssh-tunnel
@@ -16,7 +16,7 @@ services:
       - ./sshd_server_test/keys:/private.key
     restart: unless-stopped
 
-  sshdservertest:
+  sshd-server-test:
     image: panubo/sshd_sshtunneller
     build:
       context: ./sshd_server_test
