@@ -55,6 +55,7 @@ def setup_logging() -> None:
     # log_level_<module name> = ERROR
     # for example log_level_paramiko would then translate to:
     logging.getLogger('paramiko').setLevel(logging.ERROR)
+    logging.getLogger('paramiko.transport').setLevel(logging.ERROR)
 
     logging.basicConfig(
         format=log_format,
