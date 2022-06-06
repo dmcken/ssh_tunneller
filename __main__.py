@@ -83,7 +83,7 @@ def parse_config() -> dict[str,str]:
     tunnel_params = {}
 
     # Mandatory parameters
-    tunnel_params['destination'] = (ssh_host_ip, ssh_port)
+    tunnel_params['destination'] = tuple([ssh_host_ip, ssh_port])
     tunnel_params['ssh_username'] = ssh_username
     tunnel_params['set_keepalive'] = 30.0
 
