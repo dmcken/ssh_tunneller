@@ -127,15 +127,16 @@ def main() -> None:
 
     logging.info("SSH Tunnel starting...")
     # Potentally dangerous statement as passwords will be included
-    logging.debug("SSH Tunnel parameters: %s", pprint.pformat(tunnel_config))
+    logging.debug("SSH Tunnel parameters:\n%s", pprint.pformat(tunnel_config))
 
     try:
         with sshtunnel.open_tunnel(
             **tunnel_config
         ) as server:
-            logging.info("SSH Tunnels established on %s@%s: binds:\n'%s' => '%s'",
+            logging.info("SSH Tunnels established on %s@%s:%d binds:\n'%s' => '%s'",
                 tunnel_config['ssh_username'],
-                tunnel_config['ssh_address_or_host'],
+                tunnel_config['ssh_address_or_host'][0],
+                tunnel_config['ssh_address_or_host'][1],
                 tunnel_config['remote_bind_addresses'],
                 tunnel_config['local_bind_addresses'],
             )
