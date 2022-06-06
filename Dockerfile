@@ -1,6 +1,6 @@
 FROM python:3-slim
 
-LABEL maintainer Jossec101(jossec101@protonmail.com)
+LABEL maintainer David Mc Ken ()
 
 RUN pip install sshtunnel
 
