@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   ssh-tunnel:
-    image: dmcken/ssh-tunnel:v0.0.8
+    image: dmcken/ssh-tunnel:v0.0.9
     build:
       context: .
     ports:

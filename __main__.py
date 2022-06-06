@@ -69,32 +69,29 @@ def parse_config() -> dict[str,str]:
     Scan and parse environment and produce argument dictionary to pass to
     sshtunnel's open_tunnel function.
     '''
-    # Fetch and sanitise input
-    # TODO: fetch more on demand
+    tunnel_params = {}
+
+    # Mandatory items
     ssh_host = os.environ.get("ssh_host")
     ssh_port = int(os.environ.get("ssh_port"))
     ssh_username = os.environ.get("ssh_username")
-    ssh_password = os.environ.get("ssh_password")
-    ssh_private_key_password = os.environ.get("ssh_private_key_password")
-    remote_bind_addresses = os.environ.get("remote_bind_addresses")
-    local_bind_addresses = os.environ.get("local_bind_addresses")
 
-    tunnel_params = {}
-
-    # Mandatory parameters
     tunnel_params['ssh_address_or_host'] = tuple([ssh_host, ssh_port])
     tunnel_params['ssh_username'] = ssh_username
     tunnel_params['set_keepalive'] = 30.0
 
     private_key_file = "/private.key"
     if os.path.exists(private_key_file):
-        logging.info("Private key found, certificate mode enabled")
+        logging.debug("Private key present - using public key authentication")
         tunnel_params['ssh_pkey'] = private_key_file
+
+        ssh_private_key_password = os.environ.get("ssh_private_key_password")
         if ssh_private_key_password in [None, 'None']:
-            pass
+            pass # No key password
         else:
             tunnel_params['ssh_private_key_password'] = ssh_private_key_password
     else:
+        ssh_password = os.environ.get("ssh_password")
         if ssh_password is None:
             logging.error("SSH Password not provided, quitting...")
             sys.exit(-1)
@@ -102,6 +99,8 @@ def parse_config() -> dict[str,str]:
             tunnel_params['ssh_password'] = ssh_password
 
     # Tunnel forwards
+    remote_bind_addresses = os.environ.get("remote_bind_addresses")
+    local_bind_addresses = os.environ.get("local_bind_addresses")
     tunnel_params['remote_bind_addresses'] = ast.literal_eval(remote_bind_addresses)
     tunnel_params['local_bind_addresses']  = ast.literal_eval(local_bind_addresses)
 
