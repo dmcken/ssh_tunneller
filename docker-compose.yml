@@ -12,9 +12,9 @@ services:
       - "3306:3306"
     env_file:
       - .env
-    #volumes:
-    #  - ./sshd_server_test/keys:/private.key
-    restart: always
+    volumes:
+      - ./sshd_server_test/keys:/private.key
+    restart: unless-stopped
 
   sshdservertest:
     image: panubo/sshd_sshtunneller
