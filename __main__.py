@@ -54,7 +54,7 @@ def setup_logging() -> None:
     # Current thoughts on the matter, allow the definition of variable:
     # log_level_<module name> = ERROR
     # for example log_level_paramiko would then translate to:
-    # logging.getLogger('paramiko').setLevel(logging.ERROR)
+    logging.getLogger('paramiko').setLevel(logging.ERROR)
 
     logging.basicConfig(
         format=log_format,
